@@ -83,7 +83,42 @@ The development phase of DevOps requires proper coding tools, and setting up you
      ```
 
 ## Step 3 - Begin Ansible Development
-     
+
+1. Create a New Development Branch: To manage changes effectively, create a new branch in your ansible-config-mgt repository, dedicated to developing new features or configurations.
+
+```
+git checkout -b feature/prj-11-ansible-config-mgt
+```     
+
+2. Push the Branch to GitHub: After creating the branch, push it to GitHub to keep it available for tracking and collaboration:
+
+```
+git push -u origin feature/prj-11-ansible-config-mgt
+```
+image 13
+
+image 14
+
+3. Create a directory and name it playbooks - it will be used to store all playbook files.
+```
+mkdir playbooks
+```
+
+4. Create a directory and name it inventory - it will be used to keep your hosts organised.
+```
+mkdir inventory
+```
+image 15
+
+5. Within the playbooks folder, create first playbook, and name it common.yml
+```
+touch common.yml
+```
+
+6. Within the inventory folder, create an inventory file () for each environment (Development, Staging Testing and Production) dev, staging, uat, and prod respectively. These inventory files use .ini languages style to configure Ansible hosts.
+```
+touch dev.yml staging.yml uat.yml prod.yml
+```
 
 
 
