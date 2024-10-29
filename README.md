@@ -158,14 +158,144 @@ image 17
 <Load-Balancer-Private-IP-Address> ansible_ssh_user=ubuntu
 ```
 image 18
+Each server group (nfs, webservers, db, lb) represents a different function within your infrastructure. You can refer to each group individually within playbooks to apply specific configurations.
+
 
 ## Step 5 - Create a Common Playbook.
+1. It is time to start giving Ansible the instructions on what need to be performed on all servers listed in inventory/dev.
+
+2. In common.yml playbook We will write configuration for repeatable, re-usable, and multi-machine tasks that is common to systems within the infrastructure.
+
+3. Update your playbooks/common.yml file with following code
+
+```
+---
+- name: update web, nfs and db servers
+  hosts: webservers, nfs, db
+  become: yes
+  tasks:
+    - name: ensure wireshark is at the latest version
+      yum:
+        name: wireshark
+        state: latest
+
+- name: update LB server
+  hosts: lb
+  become: yes
+  tasks:
+    - name: Update apt repo
+      apt:
+        update_cache: yes
+
+    - name: ensure wireshark is at the latest version
+      apt:
+        name: wireshark
+        state: latest
+```
+image 19
+
+Examine the code above and try to make sense out of it. This playbook is divided into two parts, each of them is intended to perform the same task: install wireshark utility (or make sure it is updated to the latest version) on RHEL 9 and Ubuntu servers. It uses root user to perform this task and respective package manager: yum for RHEL 9 and apt for Ubuntu.
+
+Feel free to update this playbook with following tasks:
+
+* Create a directory and a file inside it.
+* Change timezone on all servers.
+* Run some shell script.
+
+```
+- name: Configure system settings
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create directory
+      file:
+        path: /etc/ansible-config-mgt
+        state: directory
+
+    - name: Create file inside the directory
+      file:
+        path: /etc/ansible-config-mgt/config.txt
+        state: touch
+
+    - name: Change timezone to Lagos
+      timezone:
+        name: Africa/Lagos
+```
+image 20
+
+Update the `common.yml` playbook with these new tasks.
 
 
 
+## Step 6 - Update GIT with the latest code.
+
+Collaboration in a DevOps environment involves using Git for version control, where changes are reviewed before merging into the main branch.
+
+1. Check the Status of Modified Files:
+```
+git status
+
+```
+2. Add Files to Staging Area: Specify files to be committed, or use . to stage all changes:
+```
+git add playbooks/common.yml inventory/dev.ini
+```
+
+3. Commit the Changes with a Message: Include a clear and descriptive commit message:
+```
+git commit -m "Add common.yml playbook with initial configuration tasks"
+```
+
+4. Push your changes to the feature branch:
+```
+git push origin feature/prj-11-ansible-config-mgt
+```
+image 21
+
+5. Create a Pull Request (PR)
+* Navigate to Your Repository on GitHub and locate your branch.
+* Click on Pull Request to compare changes between the feature branch and main.
+* Add a Title and Description for the PR and submit it for review.
+
+image 22
+image 23
+
+6. Review and Merge the PR
+* Switch roles to review the PR. Check the code for accuracy and adherence to standards. If satisfied:
+* Approve the PR and Merge it into the main branch.
+* Once merged, delete the feature branch if no longer needed.
+
+image 24
+image 25
+
+7. On your local machine, switch back to main, pull the latest changes, and confirm the merge:
+   
+```
+git checkout main
+git pull origin main
+```
+image 26
+
+### After the changes are merged, Jenkins will automatically trigger a build, archiving the files in the following directory:
+```
+/var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/
+```
+image 27
 
 
+## Step 7 - Run the First Ansible Test
+After configuring the playbook and setting up inventory files, it’s time to test if the playbook runs correctly across your servers. This step verifies if Ansible is correctly applying configurations specified in the common.yml playbook.
 
+1. Connecting to the Instance in VS Code:
+Before executing the playbook, ensure your VSCode is properly configured to connect to your Jenkins-Ansible instance over SSH. This setup simplifies command execution directly from VSCode
+
+2. Configuring Visual Studio Code (VSCode) for SSH access to your Jenkins-Ansible instance streamlines running Ansible commands, editing files, and viewing logs directly from your local VSCode interface. Below are the steps for setting up this SSH connection.
+
+3. Install the VSCode Remote - SSH Extension
+   * Open VSCode and go to the Extensions sidebar (or press Ctrl+Shift+X).
+   * Search for the extension called Remote - SSH (developed by Microsoft).
+   * Click Install to add it to VSCode.
+image 28
 
 
 
