@@ -119,9 +119,47 @@ touch common.yml
 ```
 touch dev.yml staging.yml uat.yml prod.yml
 ```
+image 16
 
+## Step 4 - Set up an Ansible Inventory.
 
+An Ansible inventory file defines the hosts and groups of hosts upon which commands, modules, and tasks in a playbook operate. Since our intention is to execute Linux commands on remote hosts, and ensure that it is the intended configuration on a particular server that occurs. It is important to have a way to organize our hosts in such an Inventory. Save the below inventory structure in the inventory/dev file to start configuring development servers. Ensure to replace the IP addresses according to your own setup.
 
+Note: Ansible uses TCP port 22 by default, which means it needs to ssh into target servers from Jenkins-Ansible host - for this you can implement the concept of ssh-agent. Now you need to import key into ssh-agent:
+```
+eval `ssh-agent -s`
+ssh-add <path-to-private-key>
+```
+
+1. Confirm the key has been added with the command below, we should see the name of key.
+```
+ssh-add -l
+```
+
+2. Now, ssh into Jenkins-Ansible server using ssh-agent
+```
+ssh -A ubuntu@public-ip
+```
+image 17
+
+3. Update your inventory/dev.yml file with this snippet of code:
+```
+[nfs]
+<NFS-Server-Private-IP-Address> ansible_ssh_user=ec2-user
+
+[webservers]
+<Web-Server1-Private-IP-Address> ansible_ssh_user=ec2-user
+<Web-Server2-Private-IP-Address> ansible_ssh_user=ec2-user
+
+[db]
+<Database-Private-IP-Address> ansible_ssh_user=ec2-user
+
+[lb]
+<Load-Balancer-Private-IP-Address> ansible_ssh_user=ubuntu
+```
+image 18
+
+## Step 5 - Create a Common Playbook.
 
 
 
