@@ -295,7 +295,17 @@ Before executing the playbook, ensure your VSCode is properly configured to conn
    * Open VSCode and go to the Extensions sidebar (or press Ctrl+Shift+X).
    * Search for the extension called Remote - SSH (developed by Microsoft).
    * Click Install to add it to VSCode.
-image 28
+
+![image 28]()
+
+Configure the SSH Connection in VSCode**
+
+Access the Remote Explorer:
+
+In VSCode, go to the Remote Explorer sidebar.
+Select SSH Targets from the dropdown.
+
+![image 29]()
 
 
 
