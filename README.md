@@ -298,15 +298,20 @@ Before executing the playbook, ensure your VSCode is properly configured to conn
 
 ![image 28]()
 
-Configure the SSH Connection in VSCode**
-
-Access the Remote Explorer:
-
-In VSCode, go to the Remote Explorer sidebar.
-Select SSH Targets from the dropdown.
+4. Configure the SSH Connection in VSCode
+   * Access the Remote Explorer
+   * In VSCode, go to the Remote Explorer sidebar.
+   * Select SSH Targets from the dropdown.
 
 ![image 29]()
 
+5. Add SSH Target:
+   * Click on the plus (+) icon next to SSH Targets.
+   * You will be prompted to Enter SSH Connection Command. This command specifies the user and IP address of your Jenkins-Ansible instance:
+  
+     ```
+     ssh ubuntu@<Jenkins-Ansible-Public-IP>
+     ```
 
 
 
