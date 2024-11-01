@@ -347,7 +347,7 @@ image 30
 
 image 31
 
-## Quick Step : 
+### Quick Step : 
 
 Access the instances that was created from the start of this project from the Jenkins-Ansible server to register the servers locally and allow access to the servers when trying to run the ansible playbook configuration. Follow the following steps from your GitBash.
 
@@ -356,7 +356,6 @@ Access the instances that was created from the start of this project from the Je
    ```
    eval `ssh-agent -s`
    ```
-
 
 2. Add Your Private Key to SSH Agent:
 
@@ -381,6 +380,13 @@ Access the instances that was created from the start of this project from the Je
    ```
    ssh <Private IP address of instance>
    ```
+   
+image 32
+
+image 33
+
+### Now that the servers have been connected to locally, we can continue the following steps
+
 
 8. Connect to the Jenkins-Ansible Instance:
    * In the Remote Explorer sidebar in VSCode, under SSH Targets, you should see your newly added SSH target.
@@ -410,7 +416,15 @@ It would display the ubuntu user or whatever username is configured for your Jen
 
 12. Run the Playbook with Ansible:
     * To execute the common.yml playbook on the dev environment servers, use the following Ansible command. This command specifies the inventory file and playbook to use:
+    ```
+    ansible-playbook -i inventory/dev.yml playbooks/common.yml
+    ```
+image 34
 
+13. This command does the following:
+    * Uses `-i inventory/dev.yml` to specify the inventory file for the development environment.
+    * Targets the `playbooks/common.yml` playbook.
+    * Note: Make sure you’re in the `ansible-config-mgt` directory before running the command.
 
 
 
