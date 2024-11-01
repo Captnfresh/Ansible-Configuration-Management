@@ -278,13 +278,13 @@ git push origin feature/prj-11-ansible-config-mgt
 git checkout main
 git pull origin main
 ```
-![image 26]()
+![image 26](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2026.jpg)
 
 ### After the changes are merged, Jenkins will automatically trigger a build, archiving the files in the following directory:
 ```
 /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/
 ```
-![image 27]()
+![image 27](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2027.jpg)
 
 
 ## Step 7 - Run the First Ansible Test
@@ -300,14 +300,14 @@ Before executing the playbook, ensure your VSCode is properly configured to conn
    * Search for the extension called Remote - SSH (developed by Microsoft).
    * Click Install to add it to VSCode.
 
-![image 28]()
+![image 28](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2028.jpg)
 
 4. Configure the SSH Connection in VSCode
    * Access the Remote Explorer
    * In VSCode, go to the Remote Explorer sidebar.
    * Select SSH Targets from the dropdown.
 
-![image 29]()
+![image 29](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2029.jpg)
 
 5. Add SSH Target:
    * Click on the plus (+) icon next to SSH Targets.
@@ -316,7 +316,7 @@ Before executing the playbook, ensure your VSCode is properly configured to conn
      ```
      ssh ubuntu@<Jenkins-Ansible-Public-IP>
      ```
-![image 30]()
+![image 30](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2030.jpg)
 
 6. Select the SSH Configuration File:
    * After entering the command, VSCode will prompt you to select an SSH configuration file (usually ~/.ssh/config if it exists).
@@ -349,7 +349,7 @@ Before executing the playbook, ensure your VSCode is properly configured to conn
      
      Replace `<Jenkins-Ansible-Public-IP>` and `<path-to-private-key>` with your instance’s IP and the path to your SSH key, respectively.
 
-![image 31]()
+![image 31](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2031.jpg)
 
 ### Quick Step : 
 
@@ -385,9 +385,9 @@ Access the instances that was created from the start of this project from the Je
    ssh <Private IP address of instance>
    ```
    
-![image 32]()
+![image 32](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2032.jpg)
 
-![image 33]()
+![image 33](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2033.jpg)
 
 ### Now that the servers have been connected to locally, we can continue the following steps
 
@@ -423,7 +423,7 @@ It would display the ubuntu user or whatever username is configured for your Jen
     ```
     ansible-playbook -i inventory/dev.yml playbooks/common.yml
     ```
-![image 34]()
+![image 34](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2034.jpg)
 
 13. This command does the following:
     * Uses `-i inventory/dev.yml` to specify the inventory file for the development environment.
@@ -436,7 +436,7 @@ It would display the ubuntu user or whatever username is configured for your Jen
       ```
       wireshark --version
       ```
-![image 35]()
+![image 35](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2035.jpg)
 
 If Wireshark is installed, these commands should output the path to Wireshark or display its version number.
 
