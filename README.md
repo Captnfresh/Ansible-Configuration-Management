@@ -23,50 +23,50 @@ sudo apt update
 ```
 sudo apt install ansible
 ```
-image 3
+![image 3]()
 
 5. Verify the installation by checking the Ansible version:
 
 ```
 ansible --version
 ```
-image 4
+![image 4]()
 
 Now that Ansible is installed, let's automate the integration between Jenkins and your GitHub repository:
 
 6. Create a Jenkins Freestyle Project: Head over to Jenkins and create a new freestyle project called ansible.
 
-image 5
+![image 5]()
 
 7. Configure a webhook in GitHub and set the webhook to trigger ansible build.
 
-image 6
+![image 6]()
 
-image 7
+![image 7]()
 
 8. Configure a Post-Build Action: configure a post-build action to archive all files generated during the build
 
-image 8
+![image 8]()
 
 9. To confirm everything is functioning as expected: Make a minor change in the README.md file in the `main` branch of your GitHub repository. Push the changes and verify that Jenkins automatically triggers the build.
 
-image 9
+![image 9]()
 
 10. Check that the build artifacts are saved in the specified directory.
 ```
 ls /var/lib/jenkins/jobs/Ansible/builds/1/archive/
 ```
-image 10
+![image 10]()
 
 ### Note: Trigger Jenkins project execution only for main (or master) branch
 
 Now the setup would be like this image below:
 
-image 11
+![image 11]()
 
 Also, Every time you Stop/Start your Jenkins-Ansible server, you hsve to configure github webhook to a new IP address. In order to avoid it, It only makes sense to allocate an Elastic IP to your Jenkins-Ansible Ec2 instance.
 
-image 12
+![image 12]()
 
 
 ## Step 2 - Prepare Your Development Environment Using Visual Studio Code
@@ -97,9 +97,9 @@ git checkout -b feature/prj-11-ansible-config-mgt
 ```
 git push -u origin feature/prj-11-ansible-config-mgt
 ```
-image 13
+![image 13]()
 
-image 14
+![image 14]()
 
 3. Create a directory and name it playbooks - it will be used to store all playbook files.
 ```
@@ -110,7 +110,7 @@ mkdir playbooks
 ```
 mkdir inventory
 ```
-image 15
+![image 15]()
 
 5. Within the playbooks folder, create first playbook, and name it common.yml
 ```
@@ -121,7 +121,7 @@ touch common.yml
 ```
 touch dev.yml staging.yml uat.yml prod.yml
 ```
-image 16
+![image 16]()
 
 ## Step 4 - Set up an Ansible Inventory.
 
@@ -142,7 +142,7 @@ ssh-add -l
 ```
 ssh -A ubuntu@public-ip
 ```
-image 17
+![image 17]()
 
 3. Update your inventory/dev.yml file with this snippet of code:
 ```
@@ -159,7 +159,7 @@ image 17
 [lb]
 <Load-Balancer-Private-IP-Address> ansible_ssh_user=ubuntu
 ```
-image 18
+![image 18]()
 Each server group (nfs, webservers, db, lb) represents a different function within your infrastructure. You can refer to each group individually within playbooks to apply specific configurations.
 
 
@@ -194,7 +194,7 @@ Each server group (nfs, webservers, db, lb) represents a different function with
         name: wireshark
         state: latest
 ```
-image 19
+![image 19]()
 
 Examine the code above and try to make sense out of it. This playbook is divided into two parts, each of them is intended to perform the same task: install wireshark utility (or make sure it is updated to the latest version) on RHEL 9 and Ubuntu servers. It uses root user to perform this task and respective package manager: yum for RHEL 9 and apt for Ubuntu.
 
@@ -223,7 +223,7 @@ Feel free to update this playbook with following tasks:
       timezone:
         name: Africa/Lagos
 ```
-image 20
+![image 20]()
 
 Update the `common.yml` playbook with these new tasks.
 
@@ -252,23 +252,25 @@ git commit -m "Add common.yml playbook with initial configuration tasks"
 ```
 git push origin feature/prj-11-ansible-config-mgt
 ```
-image 21
+![image 21]()
 
 5. Create a Pull Request (PR)
 * Navigate to Your Repository on GitHub and locate your branch.
 * Click on Pull Request to compare changes between the feature branch and main.
 * Add a Title and Description for the PR and submit it for review.
 
-image 22
-image 23
+![image 22]()
+
+![image 23]()
 
 6. Review and Merge the PR
 * Switch roles to review the PR. Check the code for accuracy and adherence to standards. If satisfied:
 * Approve the PR and Merge it into the main branch.
 * Once merged, delete the feature branch if no longer needed.
 
-image 24
-image 25
+![image 24]()
+
+![image 25]()
 
 7. On your local machine, switch back to main, pull the latest changes, and confirm the merge:
    
@@ -276,13 +278,13 @@ image 25
 git checkout main
 git pull origin main
 ```
-image 26
+![image 26]()
 
 ### After the changes are merged, Jenkins will automatically trigger a build, archiving the files in the following directory:
 ```
 /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/
 ```
-image 27
+![image 27]()
 
 
 ## Step 7 - Run the First Ansible Test
@@ -314,7 +316,7 @@ Before executing the playbook, ensure your VSCode is properly configured to conn
      ```
      ssh ubuntu@<Jenkins-Ansible-Public-IP>
      ```
-image 30
+![image 30]()
 
 6. Select the SSH Configuration File:
    * After entering the command, VSCode will prompt you to select an SSH configuration file (usually ~/.ssh/config if it exists).
