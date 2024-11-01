@@ -1,5 +1,7 @@
 # Ansible-Configuration-Management
 
+### Quickly before you start going through this README.md documentation, Kindly go through the Self-Study.md documentation to have a clearer scope of this project.
+
 ## Step 1 - Install and Configure Ansible on Ec2 instance
 
 1. Update the `Name` tag on your `Jenkins` EC2 instance to `Jenkins-Ansible`. We will use this server to run playbooks.
@@ -425,7 +427,67 @@ image 34
     * Uses `-i inventory/dev.yml` to specify the inventory file for the development environment.
     * Targets the `playbooks/common.yml` playbook.
     * Note: Make sure you’re in the `ansible-config-mgt` directory before running the command.
+   
+14. Verify Installation on Each Server:
+    * After the playbook runs, verify that Wireshark was successfully installed on the servers. To confirm, SSH into each server and check the installation status by running:
 
+      ```
+      wireshark --version
+      ```
+image 35
+
+If Wireshark is installed, these commands should output the path to Wireshark or display its version number.
+
+
+## Updated Ansible Architecture
+
+The updated architecture with Ansible now shows:
+   * Ansible Control Node (Jenkins-Ansible Server): Hosts your Ansible configuration and executes playbooks.
+   * Managed Nodes (Inventory Servers): The playbook applies tasks to these nodes (web servers, NFS, database, and load balancer servers).
+   * Inventory Files: Organize managed nodes by environment (e.g., dev, staging, uat, prod), allowing targeted configurations.
+
+Each playbook you create will ensure consistent and automated configurations across your environments, streamlining tasks like package installations, system configurations, and maintenance tasks on multiple servers.
+
+# Key Learnings
+
+1. Fundamentals of Ansible Configuration Management: Learned how to set up and deploy configurations across multiple servers with Ansible.
+
+2. Inventory Management: Set up an inventory file to manage hosts in different groups (e.g., web, nfs, db servers).
+
+3. Configuring SSH: Configured ssh access and handled key-based authentication, ensuring secure connections to remote servers.
+
+4. Ansible Playbook Structure: Gained a strong understanding of structuring playbooks to automate common tasks, manage dependencies, and execute sequential commands.
+
+5. Error Troubleshooting: Developed troubleshooting skills for Ansible-related SSH issues and YAML syntax errors.
+
+## Challenges and Solutions
+
+### Challenge: SSH Authentication Issues
+Solution: Verified file paths and permissions for the SSH keys and ensured the IdentityFile path in the Ansible inventory and SSH config was accurate and correctly formatted.
+
+### Challenge: "Permission Denied" errors on remote servers
+Solution: Confirmed that the correct user (e.g., ubuntu, ec2-user) was set up on each server. This was resolved by specifying the exact username in the Ansible inventory and ensuring the keys had the correct permissions.
+
+### Challenge: Issues with YAML Formatting in Inventory Files
+Solution: Ensured proper YAML syntax, particularly around indentation and structure, which is critical in Ansible files. Simplified formatting and used tools to validate YAML files before deployment.
+
+### Challenge: Host Key Verification Failures
+Solution: Used ssh-keygen -R <host> to clear known hosts entries, added host keys permanently to avoid prompting, and used the -i option to specify the key file directly during testing.
+
+### Challenge: Incorrect Hostnames and Inventory Parsing Warnings
+Solution: Ensured correct hostnames and restructured the inventory file format from dev.ini to dev.yml, improving parsing compatibility with Ansible.
+
+### Challenge: Parsing Errors with YAML vs. INI File Inventory
+Solution: Changed the inventory file extension to .yml, adapting the syntax to be YAML-compliant, which helped Ansible correctly identify and load host configurations.
+
+### Challenge: Permission Denied for Ansible playbooks Execution
+Solution: Reviewed and corrected file permissions, ensuring that jenkins.pem had restricted permissions and was accessible to Ansible for running commands on remote servers.
+
+
+## Additional Tips
+1. Patience and Persistence: You see this Patience and Grit, you need to have it because each step came with new hurdles, but staying persistent helped overcome the problems, making the solution more rewarding.
+
+2. Attention to Detail: Many issues were resolved by carefully rechecking file paths, syntax, and configurations, highlighting the importance of accuracy in configuration management.
 
 
 
