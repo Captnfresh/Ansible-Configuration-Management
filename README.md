@@ -6,11 +6,11 @@
 
 1. Update the `Name` tag on your `Jenkins` EC2 instance to `Jenkins-Ansible`. We will use this server to run playbooks.
 
-![image 1]()
+![image 1](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%201.jpg)
 
 2. In your GitHub account, create a new repository named `ansible-config-mgt`. This repository will store your Ansible configurations, playbooks, and inventory files.
 
-![image 2]()
+![image 2](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%202.jpg)
 
 3. Install Ansible on your Jenkins-Ansible ec2 instance. Update your package index:
 
@@ -23,50 +23,50 @@ sudo apt update
 ```
 sudo apt install ansible
 ```
-![image 3]()
+![image 3](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%203.jpg)
 
 5. Verify the installation by checking the Ansible version:
 
 ```
 ansible --version
 ```
-![image 4]()
+![image 4](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%204.jpg)
 
 Now that Ansible is installed, let's automate the integration between Jenkins and your GitHub repository:
 
 6. Create a Jenkins Freestyle Project: Head over to Jenkins and create a new freestyle project called ansible.
 
-![image 5]()
+![image 5](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%205.jpg)
 
 7. Configure a webhook in GitHub and set the webhook to trigger ansible build.
 
-![image 6]()
+![image 6](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%206.jpg)
 
-![image 7]()
+![image 7](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%207.jpg)
 
 8. Configure a Post-Build Action: configure a post-build action to archive all files generated during the build
 
-![image 8]()
+![image 8](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%208.jpg)
 
 9. To confirm everything is functioning as expected: Make a minor change in the README.md file in the `main` branch of your GitHub repository. Push the changes and verify that Jenkins automatically triggers the build.
 
-![image 9]()
+![image 9](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%209.jpg)
 
 10. Check that the build artifacts are saved in the specified directory.
 ```
 ls /var/lib/jenkins/jobs/Ansible/builds/1/archive/
 ```
-![image 10]()
+![image 10](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2010.jpg)
 
 ### Note: Trigger Jenkins project execution only for main (or master) branch
 
 Now the setup would be like this image below:
 
-![image 11]()
+![image 11](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2011.jpg)
 
 Also, Every time you Stop/Start your Jenkins-Ansible server, you hsve to configure github webhook to a new IP address. In order to avoid it, It only makes sense to allocate an Elastic IP to your Jenkins-Ansible Ec2 instance.
 
-![image 12]()
+![image 12](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2012.jpg)
 
 
 ## Step 2 - Prepare Your Development Environment Using Visual Studio Code
@@ -97,9 +97,9 @@ git checkout -b feature/prj-11-ansible-config-mgt
 ```
 git push -u origin feature/prj-11-ansible-config-mgt
 ```
-![image 13]()
+![image 13](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2013.jpg)
 
-![image 14]()
+![image 14](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2014.jpg)
 
 3. Create a directory and name it playbooks - it will be used to store all playbook files.
 ```
@@ -110,7 +110,7 @@ mkdir playbooks
 ```
 mkdir inventory
 ```
-![image 15]()
+![image 15](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2015.jpg)
 
 5. Within the playbooks folder, create first playbook, and name it common.yml
 ```
@@ -121,7 +121,7 @@ touch common.yml
 ```
 touch dev.yml staging.yml uat.yml prod.yml
 ```
-![image 16]()
+![image 16](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2016.jpg)
 
 ## Step 4 - Set up an Ansible Inventory.
 
@@ -142,7 +142,7 @@ ssh-add -l
 ```
 ssh -A ubuntu@public-ip
 ```
-![image 17]()
+![image 17](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2017.jpg)
 
 3. Update your inventory/dev.yml file with this snippet of code:
 ```
@@ -159,7 +159,7 @@ ssh -A ubuntu@public-ip
 [lb]
 <Load-Balancer-Private-IP-Address> ansible_ssh_user=ubuntu
 ```
-![image 18]()
+![image 18](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2018.jpg)
 Each server group (nfs, webservers, db, lb) represents a different function within your infrastructure. You can refer to each group individually within playbooks to apply specific configurations.
 
 
@@ -194,7 +194,7 @@ Each server group (nfs, webservers, db, lb) represents a different function with
         name: wireshark
         state: latest
 ```
-![image 19]()
+![image 19](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2019.jpg)
 
 Examine the code above and try to make sense out of it. This playbook is divided into two parts, each of them is intended to perform the same task: install wireshark utility (or make sure it is updated to the latest version) on RHEL 9 and Ubuntu servers. It uses root user to perform this task and respective package manager: yum for RHEL 9 and apt for Ubuntu.
 
@@ -223,7 +223,7 @@ Feel free to update this playbook with following tasks:
       timezone:
         name: Africa/Lagos
 ```
-![image 20]()
+![image 20](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2020.jpg)
 
 Update the `common.yml` playbook with these new tasks.
 
@@ -252,25 +252,25 @@ git commit -m "Add common.yml playbook with initial configuration tasks"
 ```
 git push origin feature/prj-11-ansible-config-mgt
 ```
-![image 21]()
+![image 21](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2021.jpg)
 
 5. Create a Pull Request (PR)
 * Navigate to Your Repository on GitHub and locate your branch.
 * Click on Pull Request to compare changes between the feature branch and main.
 * Add a Title and Description for the PR and submit it for review.
 
-![image 22]()
+![image 22](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2022.jpg)
 
-![image 23]()
+![image 23](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2023.jpg)
 
 6. Review and Merge the PR
 * Switch roles to review the PR. Check the code for accuracy and adherence to standards. If satisfied:
 * Approve the PR and Merge it into the main branch.
 * Once merged, delete the feature branch if no longer needed.
 
-![image 24]()
+![image 24](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2024.jpg)
 
-![image 25]()
+![image 25](https://github.com/Captnfresh/Ansible-Configuration-Management/blob/main/Ansible%20Configuration%20Management/image%2025.jpg)
 
 7. On your local machine, switch back to main, pull the latest changes, and confirm the merge:
    
@@ -349,7 +349,7 @@ Before executing the playbook, ensure your VSCode is properly configured to conn
      
      Replace `<Jenkins-Ansible-Public-IP>` and `<path-to-private-key>` with your instance’s IP and the path to your SSH key, respectively.
 
-image 31
+![image 31]()
 
 ### Quick Step : 
 
@@ -385,9 +385,9 @@ Access the instances that was created from the start of this project from the Je
    ssh <Private IP address of instance>
    ```
    
-image 32
+![image 32]()
 
-image 33
+![image 33]()
 
 ### Now that the servers have been connected to locally, we can continue the following steps
 
@@ -423,7 +423,7 @@ It would display the ubuntu user or whatever username is configured for your Jen
     ```
     ansible-playbook -i inventory/dev.yml playbooks/common.yml
     ```
-image 34
+![image 34]()
 
 13. This command does the following:
     * Uses `-i inventory/dev.yml` to specify the inventory file for the development environment.
@@ -436,7 +436,7 @@ image 34
       ```
       wireshark --version
       ```
-image 35
+![image 35]()
 
 If Wireshark is installed, these commands should output the path to Wireshark or display its version number.
 
