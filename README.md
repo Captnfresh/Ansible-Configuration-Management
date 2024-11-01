@@ -312,9 +312,104 @@ Before executing the playbook, ensure your VSCode is properly configured to conn
      ```
      ssh ubuntu@<Jenkins-Ansible-Public-IP>
      ```
+image 30
+
+6. Select the SSH Configuration File:
+   * After entering the command, VSCode will prompt you to select an SSH configuration file (usually ~/.ssh/config if it exists).
+   * If you don’t have an SSH config file, VSCode will create one for you in your ~/.ssh/ directory.
+   
+7. Set Up SSH Key Authentication.
+   * To authenticate using your SSH private key, follow these steps to integrate it with your ssh-agent and configure VSCode:
+   *  Modify the SSH Config File:
+     - Open the `~/.ssh/config` file in a text editor.
+     - Add an entry for your Jenkins-Ansible instance:
+       
+     ```
+     Host jenkins-ansible
+        HostName <Jenkins-Ansible-Public-IP>
+        User ubuntu
+        IdentityFile <path-to-private-key>
+     ```
+
+     See example:
+   ```
+   Host 3.229.14.47
+    HostName 3.229.14.47
+    User ubuntu
+  
+    Host 3.229.14.47
+      HostName 3.229.14.47
+      IdentityFile C:\\Users\\HP\\Downloads\\Jenkins.pem
+      User ubuntu
+   ```
+     
+     Replace `<Jenkins-Ansible-Public-IP>` and `<path-to-private-key>` with your instance’s IP and the path to your SSH key, respectively.
+
+image 31
+
+## Quick Step : 
+
+Access the instances that was created from the start of this project from the Jenkins-Ansible server to register the servers locally and allow access to the servers when trying to run the ansible playbook configuration. Follow the following steps from your GitBash.
+
+1. Start the SSH Agent:
+
+   ```
+   eval `ssh-agent -s`
+   ```
 
 
+2. Add Your Private Key to SSH Agent:
 
+   ```
+   ssh-add <path-to-private-key>
+   ```
+
+3. Verify SSH Key Addition:
+
+   ```
+   ssh-add -l
+   ```
+
+4. Enable Agent Forwarding for SSH into Jenkins-Ansible Server:
+
+   ```
+   ssh -A ubuntu@<Jenkins-Ansible-Instance-Public-IP>
+   ```
+
+5. Connect to your servers locally
+
+   ```
+   ssh <Private IP address of instance>
+   ```
+
+8. Connect to the Jenkins-Ansible Instance:
+   * In the Remote Explorer sidebar in VSCode, under SSH Targets, you should see your newly added SSH target.
+   * Click on Connect next to jenkins-ansible (or the alias you created).
+   * VSCode will open a new remote window connected to your Jenkins-Ansible instance, allowing you to use the terminal, edit files, and run commands directly.
+   * Open the Ansible Project Directory in VSCode
+
+9. Once connected, navigate to your Ansible project directory (ansible-config-mgt) on the Jenkins-Ansible instance:
+    * In the remote VSCode window, open the File Explorer.
+    * Browse to the ansible-config-mgt directory and open it.
+    * You can now edit, save, and run commands directly in this directory, simplifying management and execution.
+
+10. To confirm the SSH connection works smoothly:
+    * Open the VSCode terminal (Ctrl+ or Terminal > New Terminal).
+    * Run a simple command to verify access:
+   
+      ```
+      whoami
+      ```
+It would display the ubuntu user or whatever username is configured for your Jenkins-Ansible instance.
+
+11. Navigate to your project directory:
+    ```
+    cd ansible-config-mgt
+
+    ```
+
+12. Run the Playbook with Ansible:
+    * To execute the common.yml playbook on the dev environment servers, use the following Ansible command. This command specifies the inventory file and playbook to use:
 
 
 
