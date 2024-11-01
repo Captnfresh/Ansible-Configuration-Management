@@ -492,6 +492,7 @@ Solution: Reviewed and corrected file permissions, ensuring that jenkins.pem had
 2. Attention to Detail: Many issues were resolved by carefully rechecking file paths, syntax, and configurations, highlighting the importance of accuracy in configuration management.
 
 
+# IMPORTANT!!!! PLEASE DO NOT FORGET TO STOP YOUR INSTANCES AFTER YOU'RE DONE WITH THE PROJECT.
 
 
 
